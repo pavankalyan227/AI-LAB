@@ -1,0 +1,123 @@
+#DFS
+def DFS(graph,start,goal):
+    frontier=[]
+    explored=[]
+    parent=[]
+    parent.append((start,None,0))
+    frontier.append(start)
+    explored.append(start)
+    pathcost=0
+    while frontier:
+        node=frontier.pop()
+        if node==goal:
+            print(" goal node found:\n")
+            break;
+        print(node,end='')
+        for i in graph[node]:
+            if i not in explored:
+                frontier.append(i)
+                explored.append(i)
+                pathcost+=graph[node][i]
+                parent.append([i,node,pathcost])
+    print("pathcost is:",pathcost)
+    return tuple(parent)
+graph={
+    'S':{'A':1,'B':2},
+    'A':{'C':3,'D':4},
+    'B':{},
+    'C':{},
+    'D':{}
+}
+DFS(graph,'S','D')
+#output:
+SBA goal node found:
+
+pathcost is: 10
+(('S', None, 0), ['A', 'S', 1], ['B', 'S', 3], ['C', 'A', 6], ['D', 'A', 10])
+
+#BFS
+def BFS(graph,start,goal):
+    frontier=[]
+    explored=[]
+    parent=[]
+    parent.append((start,None,0))
+    frontier.append(start)
+    explored.append(start)
+    pathcost=0
+    while frontier:
+        node=frontier.pop(0)
+        if node==goal:
+            print("goal node found\n")
+            break;
+        print(node,end=' ')
+        for i in graph[node]:
+            if i not in explored:
+                frontier.append(i)
+                explored.append(i)
+                pathcost+=graph[node][i]
+                parent.append((node,i,pathcost))
+    print("\npathcost is",pathcost)
+    return tuple(parent)
+graph={
+    'S':{'A':1,'B':2},
+    'A':{'C':3,'D':4},
+    'B':{},
+    'C':{},
+    'D':{}
+}
+BFS(graph,'S','D')
+#output
+S A B C goal node found
+
+
+pathcost is 10
+(('S', None, 0), ('S', 'A', 1), ('S', 'B', 3), ('A', 'C', 6), ('A', 'D', 10))
+#UCS
+def sort(frontier):
+    n=len(frontier)
+    for i in range(n):
+        min=i
+        for j in range(i+1,n):
+            if frontier[j][2]<frontier[min][2]:
+                min=j
+        temp=frontier[i]
+        frontier[i]=frontier[min]
+        frontier[min]=temp
+def ucs(graph,start,goal):
+    frontier=[]
+    explored=[]
+    frontier.append([None,start,0])
+    while frontier:
+        sort(frontier)
+        parent,node,pathcost=frontier.pop(0)
+        print("parent:",parent,"node:",node,"pathcost:",pathcost,end="\n")
+        if node==goal:
+            print("\n goal node found")
+            break;
+        if node not in explored:
+            explored.append(node)
+            
+            for i in graph[node]:
+                if i not in explored:
+                    cost=pathcost+graph[node][i]
+                    frontier.append([node,i,cost])
+    if node!=goal:
+        print("goal not found")
+graph = {
+        'S': {'A': 1, 'B': 3, 'C': 5},
+        'A': {'G': 3},
+        'G': {},
+        'B': {'F': 5},
+        'F': {},
+        'C': {'E': 2},
+        'E': {'H': 1},
+        'H': {}
+}
+ucs(graph,'S','G')
+    #output
+parent: None node: S pathcost: 0
+parent: S node: A pathcost: 1
+parent: S node: B pathcost: 3
+parent: A node: G pathcost: 4
+
+ goal node found
