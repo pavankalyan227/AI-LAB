@@ -1,43 +1,49 @@
-#vaccum world
-def clean(node):
-    if(node[node[2]]=='Dirt'):
-        node[node[2]]='Clean'
-    return node
-def moveleft(node):
-    if(node[2]==1):
-        node[2]=0
-    return node
-def moveright(node):
-    if(node[2]==0):
-        node[2]=1
-    return node
+class vaccum:
+    def __init__(self,start,goal,pos,method):
+        self.start=start
+        self.goal=goal
+        self.pos=pos
+        self.method=method
+    def clean(self,node):
+        if(node[node[2]]=='Dirt'):
+            node[node[2]]='Clean'
+        return node
+    def moveleft(self,node):
+        if(node[2]==1):
+            node[2]=0
+        return node
+    def moveright(self,node):
+        if(node[2]==0):
+            node[2]=1
+        return node
+    def solution(self):
+        f=[]
+        e=[]
+        start.append(self.pos)# 0 if intial position of cleaner in left else right
+        f.append(self.start)
+        while f:
+            if(self.method==0):
+                node=f.pop(0)
+            else:
+                node=f.pop()
+            print(node)
+            n1=node.copy()
+            n1.pop()
+            if(n1==self.goal):
+                print("goal found")
+                break
+            if node not in e:
+                e.append(node)
+                action=[self.clean(node.copy()),self.moveleft(node.copy()),self.moveright(node.copy())]
+                for i in action:
+                    if i not in e:
+                        f.append(i)
 start=['Dirt','Dirt']
 goal=['Clean','Clean']
 pos=int(input("Enter intial position left(0) or right(1):"))
 method=int(input("Enter BFS(0) or DFS(1):"))
-def vaccumworld(start,goal,pos,method):
-    f=[]
-    e=[]
-    start.append(pos)# 0 if intial position of cleaner in left else right
-    f.append(start)
-    while f:
-        if(method==0):
-            node=f.pop(0)
-        else:
-            node=f.pop()
-        print(node)
-        n1=node.copy()
-        n1.pop()
-        if(n1==goal):
-            print("goal found")
-            break
-        if node not in e:
-            e.append(node)
-            action=[clean(node.copy()),moveleft(node.copy()),moveright(node.copy())]
-            for i in action:
-                if i not in e:
-                    f.append(i)
-vaccumworld(start,goal,pos,method)
+vaccum(start,goal,pos,method).solution()
+
 #output
  Enter intial position left(0) or right(1):1
 Enter BFS(0) or DFS(1):1
