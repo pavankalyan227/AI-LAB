@@ -1,0 +1,49 @@
+#vaccum world
+def clean(node):
+    if(node[node[2]]=='Dirt'):
+        node[node[2]]='Clean'
+    return node
+def moveleft(node):
+    if(node[2]==1):
+        node[2]=0
+    return node
+def moveright(node):
+    if(node[2]==0):
+        node[2]=1
+    return node
+start=['Dirt','Dirt']
+goal=['Clean','Clean']
+pos=int(input("Enter intial position left(0) or right(1):"))
+method=int(input("Enter BFS(0) or DFS(1):"))
+def vaccumworld(start,goal,pos,method):
+    f=[]
+    e=[]
+    start.append(pos)# 0 if intial position of cleaner in left else right
+    f.append(start)
+    while f:
+        if(method==0):
+            node=f.pop(0)
+        else:
+            node=f.pop()
+        print(node)
+        n1=node.copy()
+        n1.pop()
+        if(n1==goal):
+            print("goal found")
+            break
+        if node not in e:
+            e.append(node)
+            action=[clean(node.copy()),moveleft(node.copy()),moveright(node.copy())]
+            for i in action:
+                if i not in e:
+                    f.append(i)
+vaccumworld(start,goal,pos,method)
+#output
+ Enter intial position left(0) or right(1):1
+Enter BFS(0) or DFS(1):1
+['Dirt', 'Dirt', 1]
+['Dirt', 'Dirt', 0]
+['Clean', 'Dirt', 0]
+['Clean', 'Dirt', 1]
+['Clean', 'Clean', 1]
+goal found                 
