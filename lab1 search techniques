@@ -121,3 +121,46 @@ parent: S node: B pathcost: 3
 parent: A node: G pathcost: 4
 
  goal node found
+
+#IDS
+def IDDFS(start,goal,max_depth,graph):
+    for limit in range(max_depth+1):
+        if DLS(start,goal,limit,graph):
+            return True
+    return False
+
+def DLS(start,goal,limit,graph):
+    if start==goal:
+        return True
+
+    if limit<=0:
+        return False
+
+    for neighbor in graph[start]:
+        if DLS(neighbor,goal,limit-1,graph):
+            return True
+
+    return False
+
+
+# Create graph
+graph = {
+    0: [1, 2],
+    1: [0, 3],
+    2: [0, 3, 4],
+    3: [1, 2, 5],
+    4: [2, 5],
+    5: [3, 4]
+}
+
+start = 0
+goal = 5
+max_depth = 3  # Maximum depth for iterative deepening
+
+id=IDDFS(start, goal, max_depth, graph)
+if(id==True):
+  print("Target is reachable within max depth")
+else:
+  print("Target is not reachable within max depth")
+#output
+Target is reachable within max depth
