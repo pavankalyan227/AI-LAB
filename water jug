@@ -1,0 +1,102 @@
+
+#water jug BFS
+class Waterjug:
+    def __init__(self,a,b,target):
+        self.a=a
+        self.b=b
+        self.target=target
+
+    def solution(self):
+        explored=[]
+        frontier=[]
+        frontier.append([0,0,[]])
+        while frontier:
+            node=frontier.pop(0)
+            x=node[0]
+            y=node[1]
+            path=node[2]
+            if x==self.target or y==self.target:
+                print("Target Found")
+                return len(path),path+[(x,y)]
+
+            if [x,y] not in explored:
+                explored.append([x,y])
+                cp=path+[(x,y)]
+                frontier.append([0,y,cp])
+                frontier.append([x,0,cp])
+                frontier.append([self.a,y,cp])
+
+                frontier.append([x,self.b,cp])
+                frontier.append([max(0,x-(self.b-y)),min(self.b,y+x),cp])
+                frontier.append([min(self.a,x+y),max(0,y-(self.a-x)),cp])
+steps,path=Waterjug(5, 3, 4).solution()
+if steps!=-1:
+    print(steps)
+    print("Path:")
+    for i in path:
+        print(i)
+#output
+Target Found
+6
+Path:
+(0, 0)
+(5, 0)
+(2, 3)
+(2, 0)
+(0, 2)
+(5, 2)
+(4, 3)
+
+
+#water jug DFS
+class Waterjug:
+    def __init__(self,a,b,target):
+        self.a=a
+        self.b=b
+        self.target=target
+
+    def solution(self):
+        explored=[]
+        frontier=[]
+        frontier.append([0,0,[]])
+        while frontier:
+            node=frontier.pop()
+            x=node[0]
+            y=node[1]
+            path=node[2]
+            if x==self.target or y==self.target:
+                print("Target Found")
+                return len(path),path+[(x,y)]
+
+            if [x,y] not in explored:
+                explored.append([x,y])
+                cp=path+[(x,y)]
+                frontier.append([0,y,cp])
+                frontier.append([x,0,cp])
+                frontier.append([self.a,y,cp])
+
+                frontier.append([x,self.b,cp])
+                frontier.append([max(0,x-(self.b-y)),min(self.b,y+x),cp])
+                frontier.append([min(self.a,x+y),max(0,y-(self.a-x)),cp])
+steps,path=Waterjug(5, 3, 4).solution()
+if steps!=-1:
+    print(steps)
+    print("Path:")
+    for i in path:
+        print(i)
+#output
+Target Found
+11
+Path:
+(0, 0)
+(0, 3)
+(3, 0)
+(3, 3)
+(5, 1)
+(5, 3)
+(5, 0)
+(2, 3)
+(2, 0)
+(0, 2)
+(5, 2)
+(4, 3)
