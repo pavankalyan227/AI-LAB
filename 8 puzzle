@@ -1,0 +1,64 @@
+class puzz:
+    def __init__(self,start,goal):
+        self.start=start
+        self.goal=goal
+    def huristic(self,node):
+        c=0
+        for i in range(len(node)):
+            if(node[i]!=goal[i]):
+                c=c+1
+        return c
+    def sortarg(self,f):
+        for i in range(len(f)):
+            for j in range(len(f)):
+                if(f[i][1]<f[j][1]):
+                    f[i],f[j]=f[j],f[i]
+        return f
+    def solution(self):
+        f=[]
+        e=[]
+        f.append([self.start,self.huristic(self.start)])
+        while(f):
+            f=self.sortarg(f)
+            node=f.pop(0)
+            e.append(node[0])
+            print(node)
+            if node[0]==self.goal:
+                print("goal found")
+                break
+            i=node[0].index(0)
+            if i==0:
+                 p=[1,3]
+            if i==1:
+                p=[0,2,4]
+            if i==2:
+                p=[1,5]
+            if i==3:
+                p=[0,4,6]
+            if i==4:
+                p=[1,3,5,7]
+            if i==5:
+                p=[2,4,8]
+            if i==6:
+                p=[3,7]
+            if i==7:
+                p=[6,4,8]
+            if i==8:
+                p=[5,7]
+            for t in p:
+                t2=node[0].copy()
+                t2[i]=t2[t]
+                t2[t]=0
+                if(t2 not in e):
+                    f.append([t2,self.huristic(t2)])
+intial=[1,2,3,0,4,6,7,5,8]
+goal=[1,2,3,4,5,6,7,8,0]
+puzz(intial,goal).solution()
+#output
+
+
+[[1, 2, 3, 0, 4, 6, 7, 5, 8], 4]
+[[1, 2, 3, 4, 0, 6, 7, 5, 8], 3]
+[[1, 2, 3, 4, 5, 6, 7, 0, 8], 2]
+[[1, 2, 3, 4, 5, 6, 7, 8, 0], 0]
+goal found
